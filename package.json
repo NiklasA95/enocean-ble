@@ -1,0 +1,23 @@
+{
+  "name": "enocean-ble",
+  "version": "0.0.1",
+  "description": "Monitors the transmissions of the EnOcean BLE Pushbutton Transmitter Module (PTM 215B)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NiklasA95/enocean-ble.git"
+  },
+  "author": "Niklas Amann",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/NiklasA95/enocean-ble/issues"
+  },
+  "homepage": "https://github.com/NiklasA95/enocean-ble#readme",
+  "dependencies": {
+    "@abandonware/noble": "1.9.2-10",
+    "node-enocean-ble": "^0.0.2"
+  }
+}
