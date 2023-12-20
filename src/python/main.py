@@ -1,4 +1,7 @@
 import re
+import asyncio
+
+from bleak import BleakClient
 
 def commission_device(commissioning_string):
     if not commissioning_string:
@@ -26,14 +29,19 @@ def commission_device(commissioning_string):
     return cdata
         
 
-def main():
+async def main():
     try:
-        commissioning_string = "30SE2150002E87A+Z86E7570162493D787396E2B4522C8040+30PS3221-A215+2PDD07+S01546701113804"
+        commissioning_string = "30S123456789abc+Zabcdef1234567890abcdef1234567890+30Pabcdefghij+2Pabcd+S12345678"
         result = commission_device(commissioning_string)
         print("Commissioning successful:")
         print(result)
+
+        async with BleakClient("97411DBA-427C-E532-765F-B0A216B30E1D") as client:
+            print(await client.get_services())
+
+
     except ValueError as e:
         print(f"Error: {e}")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
