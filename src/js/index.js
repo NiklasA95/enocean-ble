@@ -1,11 +1,11 @@
 const secrets = require("./secrets.js");
 
 // Load the node-enocean-ble and get a `EnoceanBle` constructor object
-const EnoceanBle = require("node-enocean-ble");
+const EnoceanBle = require("./lib/enocean-ble.js");
 // Create an `EnoceanBle` object
 const enocean = new EnoceanBle();
 
-// Commissioning (Easyfit Double Rocker Wall Switch)
+// Commissioning
 enocean.commission(secrets.commissioningData);
 
 // Set a callback for incoming telegrams
@@ -15,7 +15,7 @@ enocean.ondata = (telegram) => {
 
 // Start to monitor telegrams
 enocean
-  .start()
+  .start({ auth: false })
   .then(() => {
     // Successfully started to monitor telegrams
   })
