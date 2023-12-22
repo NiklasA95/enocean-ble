@@ -1,7 +1,7 @@
 import re
 import asyncio
 
-from bleak import BleakClient
+from bleak import BleakScanner
 
 def commission_device(commissioning_string):
     if not commissioning_string:
@@ -30,18 +30,32 @@ def commission_device(commissioning_string):
         
 
 async def main():
+    stop_event = asyncio.Event()
+    result = None
+
     try:
-        commissioning_string = "30S123456789abc+Zabcdef1234567890abcdef1234567890+30Pabcdefghij+2Pabcd+S12345678"
+        commissioning_string = "30SE2150002E87A+Z86E7570162493D787396E2B4522C8040+30PS3221-A215+2PDD07+S01546701113804"
         result = commission_device(commissioning_string)
         print("Commissioning successful:")
         print(result)
 
-        async with BleakClient("97411DBA-427C-E532-765F-B0A216B30E1D") as client:
-            print(await client.get_services())
-
-
     except ValueError as e:
         print(f"Error: {e}")
+
+    def on_detection(device, advertising_data):
+        if device.address == result.address:
+            print()
+            print(device)
+            print("-" * len(str(device)))
+            print(advertising_data)
+
+        pass
+
+    async with BleakScanner(on_detection):
+        ...
+        # Important! Wait for an event to trigger stop, otherwise scanner
+        # will stop immediately.
+        await stop_event.wait()
 
 if __name__ == "__main__":
     asyncio.run(main())
